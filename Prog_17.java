@@ -6,7 +6,7 @@ public class Main {
     // QuickSort method
     public static void quickSort(String[] names, int low, int high) {
         if (low < high) {
-            String pivot = names[(high+low)/2];
+            String pivot = names[high];
             int i = low - 1;
 
             for (int j = low; j < high; j++) {
