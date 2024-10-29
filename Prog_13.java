@@ -2,7 +2,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 
-class Calculator2 {
+class Main {
 
     static JFrame f;
     static JTextField l;
@@ -79,7 +79,6 @@ class Calculator2 {
         f.setVisible(true);
     }
 }
-
 class CAL implements ActionListener {
 
     private JTextField l;
@@ -92,48 +91,52 @@ class CAL implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
-		System.out.println(s);
+        System.out.println(s);
+        
         if ((s.charAt(0) >= '0' && s.charAt(0) <= '9') || s.charAt(0) == '.') {
-
-            if (s1.equals("")==false)
+            if (!s1.equals("")) {
                 s2 = s2 + s;
-            else
+            } else {
                 s0 = s0 + s;
-
+            }
             l.setText(s0 + s1 + s2);
-        }
-        else if (s.charAt(0) == 'C') {
+        } else if (s.charAt(0) == 'C') {
             s0 = s1 = s2 = "";
             l.setText(s0 + s1 + s2);
-        }
-        else if (s.charAt(0) == '=') {
-			float te;
-			switch (s1) {
-				case "+":
-					te = Float.parseFloat(s0) + Float.parseFloat(s2);
-					break;
-				case "-":
-					te = Float.parseFloat(s0) - Float.parseFloat(s2);
-					break;
-				case "/":
-					te = Float.parseFloat(s0) / Float.parseFloat(s2);
-					break;
-				case "*":
-					te = Float.parseFloat(s0) * Float.parseFloat(s2);
-					break;
-				default:
-					te = 0; 
-					break;
-			}
-
-			l.setText("" + te);
-			s0 = Float.toString(te);
-			s1 = s2 = "";
-		}
-
-        else {
+        } else if (s.charAt(0) == '=') {
+            float te;
+            try {
+                switch (s1) {
+                    case "+":
+                        te = Float.parseFloat(s0) + Float.parseFloat(s2);
+                        break;
+                    case "-":
+                        te = Float.parseFloat(s0) - Float.parseFloat(s2);
+                        break;
+                    case "/":
+                        if (Float.parseFloat(s2) == 0) {
+                            throw new ArithmeticException("Cannot divide by zero");
+                        }
+                        te = Float.parseFloat(s0) / Float.parseFloat(s2);
+                        break;
+                    case "*":
+                        te = Float.parseFloat(s0) * Float.parseFloat(s2);
+                        break;
+                    default:
+                        te = 0;
+                        break;
+                }
+                l.setText("" + te);
+                s0 = Float.toString(te);
+                s1 = s2 = "";
+            } 
+            catch (ArithmeticException ex) {
+                l.setText("Error: " + ex.getMessage());
+                s0 = s1 = s2 = "";
+            }
+        } else {
             s1 = s;
             l.setText(s0 + s1 + s2);
         }
     }
-}  
+}
