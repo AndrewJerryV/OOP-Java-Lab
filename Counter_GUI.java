@@ -22,9 +22,7 @@ class EL implements ActionListener {
 
             for (int i = 0; i < data.length(); i++) {
                 char ch = data.charAt(i);
-                if (Character.isLetter(ch)) {
-                    letters++;
-                }
+                letters++;
                 if (ch == ' ' || ch == '\n') {
                     words++;
                 }
